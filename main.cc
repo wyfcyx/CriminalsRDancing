@@ -89,11 +89,11 @@ bool IsSomePlayerWin(Player Players[], int players_number, int win_score) {
 	static int mx, cnt;
 	mx = cnt = 0;
 	for (int i = 0; i < players_number; ++i) {
-		if(Players[i].score > mx) {
+		if (Players[i].score > mx) {
 			mx = Players[i].score;
 			cnt = 1;
 		}
-		else if(mx == Players[i].score)
+		else if (mx == Players[i].score)
 			++cnt;
 	}
 	if (mx >= win_score && cnt == 1)
@@ -108,7 +108,7 @@ int main()
 	int players_number;
 	while (1) {
 		scanf("%d", &players_number);
-		if(players_number < 3 || players_number > 8) {
+		if (players_number < 3 || players_number > 8) {
 			puts("游戏人数必须在3人和8人之间，请重新输入！");
 			continue ;
 		}
@@ -120,7 +120,7 @@ int main()
 	int win_score;
 	while (1) {
 		scanf("%d", &win_score);
-		if(win_score <= 0) {
+		if (win_score <= 0) {
 			puts("赢得游戏得分必须为正整数，请重新输入！");
 			continue ;
 		}
