@@ -10,16 +10,16 @@ CardManager :: CardManager(int _)
 
 bool CardManager :: GenerateCardsSequence()
 {
-	if(total_players < MIN_PLAYER) {
+	if (total_players < MIN_PLAYER) {
 		puts("Not enough players, cards will not shuffle.");
 		return false;
 	}
-	if(total_players > MAX_PLAYER) {
+	if (total_players > MAX_PLAYER) {
 		puts("Too many players, cards will not shuffle.");
 		return false;
 	}
 
-	if(total_players == MAX_PLAYER)
+	if (total_players == MAX_PLAYER)
 		memcpy(card_seq, predealed_sequence, sizeof(int) * 32);
 	else {
 		memcpy(card_seq, predealed_sequence, start_point[total_players]);
