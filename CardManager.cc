@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <algorithm>
 
 #include "CardManager.h"
 
@@ -46,5 +47,6 @@ bool CardManager :: GenerateCardsSequence()
 
 void Shuffle(int *array, int elements)
 {
+	std::random_shuffle(array, array + sizeof(int) * elements);
 	return ;
 }
