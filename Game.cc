@@ -1,71 +1,74 @@
+#include <map>
+#include <cstdio>
+
 #include "Game.h"
 #include "Player.h"
 #include "defs.h"
 #include "CardManager.h"
 
-Game :: Game()
+Game :: Game(int _, int __)
 {
-
-}
-
-void Game :: SetNumberOfPlayers()
-{
-	printf("Please input the number of players : ");
-	int _;
-	while (1) {
-		scanf("%d", &_);
-		if (_ < 3 || _ > 8) {
-			printf("The number must be in range [3,8]!\nPlease input the number of players : ");
-			continue;
-		}
-		else
-			break;
-	}
 	num_players = _;
+	win_score = __;
+	manager = new CardManager(num_players);
+
+	for (int i = 0; i < num_players; ++i)
+		rank[i] = 1;
 }
 
-void Game :: SetWinScore()
+bool Game :: MaintainRanking()
 {
-	printf("Please input the minimum score to win : ");
-	int _;
-	while (1) {
-		scanf("%d", &_);
-		if (_ <= 0) {
-			printf("You must input a positive number!\nPlease input the minimum score to win : ");
-			continue;
-		}
-		else 
-			break;
-	}
-	win_score = _;
-}
+	static std::map<int, int> score;
+	score.clear();
+	for (int i = 0; i < num_players; ++i)
+		score.insert(make_pair(players[i], i));
+	
+	int current_rank = 0, last_rank = 0, last_score = 0;
+	for (std::map<int, int>::reverse_iterator i = score.rbegin(); i != score.rend(); ++i, ++current_rank) {
 
-int Game :: FindWinner()
-{
-	static int mx, cnt, best_player;
-	mx = cnt = 0;
-	for (int i = 0; i < num_players; ++i) {
-		if (mx < players[i].score) {
-			mx = players[i].score;
-			cnt = 1;
-			best_player = i;
-		}
-		else if (mx == players[i].score)
-			++cnt;
+		if (i == score.rbegin() || last_score != i->first)
+			rank[i->second] = current_rank;
+		else
+			rank[i->second] = last_rank;
+		
+		last_score = i->first;
+		last_rank = rank[i->second];
 	}
-	if (mx >= win_score && cnt == 1)
-		return best_player;
-	else
-		return -1;
+
+	return score.rbegin()->first >= min_score;
 }
 
 void Game :: SubGameStart()
 {
-	//QwQ
+	manager->GenerateCardsSequence();
+	
 }
 
 void Game :: Start()
 {
-	SetNumberOfPlayers();
-	SetWinScore();
+	for (int i = 0; i < num_players; ++i)
+		players[i] = Player();
+
+	while (true) {
+		SubGameStart();
+		
+		if (MaintainRanking())
+			break;
+
+		PrintRanking();
+	}
+	puts("Game over!");
+}
+
+void Game :: PringRanking()
+{
+	for (int i = 1; i <= num_players; ++i)
+		for (int j = 0; i < num_players; ++j) {
+			if(rank[j] == i) {
+				printf("Rank %d: %s", i, players[j].name);
+				if(i == 1)
+					printf("\t\tbeast player!");
+				puts("");
+			}
+		}
 }

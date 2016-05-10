@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <cstring>
 
 #include "defs.h"
@@ -38,12 +39,12 @@ int Player :: GetScore()
 
 void Player :: CardList() 
 {
-	printf("Cards :");
+	printf("Cards: ");
 	if (!num_cards)
 		puts(" no cards.");
 	else {
 		for (int i = 1; i <= num_cards; ++i)
-			printf(" %s", DAG_TO_NAME_IN_ENGLISH[cards[i]]);
+			printf(" %s", DIG_TO_NAME_IN_ENGLISH[cards[i]]);
 		puts("");
 	}
 }
@@ -58,6 +59,7 @@ char *Player :: GetName()
 	return name;
 }
 
-void Player :: GainScore(int add) {
+void Player :: GainScore(int add) 
+{
 	score += add;
 }

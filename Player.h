@@ -5,7 +5,10 @@
 
 class Player {
 public:
+	int score;
+
 	Player();
+
 	void BeforeTheSubGame();
 	void GetCard(int card);
 	void SendCard(int pos);
@@ -15,8 +18,9 @@ public:
 	void SetName(char *_name);
 	char *GetName();
 	void GainScore(int add);
+
 private:
-	int cards[MAX_CARD], num_cards, score;
+	int cards[MAX_CARD], num_cards;
 	bool co_criminal;
 	char name[110];
 };

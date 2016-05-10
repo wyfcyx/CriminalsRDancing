@@ -14,7 +14,7 @@ CardManager.o: CardManager.cc CardManager.h defs.h
 Player.o: Player.cc Player.h defs.h
 	clang++ -c Player.cc
 
-Game.o: Game.cc Game.h Player.h defs.h
+Game.o: Game.cc Game.h Player.h CardManager.h defs.h
 	clang++ -c Game.cc
 
 clean:

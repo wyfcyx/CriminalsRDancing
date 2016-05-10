@@ -1,5 +1,7 @@
+#include <ctime>
 #include <cstdio>
 #include <cstring>
+#include <cstdlib>
 #include <algorithm>
 
 #include "CardManager.h"
@@ -22,7 +24,7 @@ void CardManager :: GenerateCardsSequence()
 
 		int remained_num = ALL_CARD - start_point[total_players];
 		memcpy(need_to_be_shuffled,
-			   predealed_sequence + sizeof(int) * start_point[total_players], 
+			   predealed_sequence + sizeof(int) * start_point[total_players],
 			   sizeof(int) * remained_num);
 		
 		Shuffle(need_to_be_shuffled, remained_num);
@@ -39,6 +41,7 @@ void CardManager :: GenerateCardsSequence()
 
 void Shuffle(int *array, int elements)
 {
+	srand((unsigned int)time(NULL));
 	std::random_shuffle(array, array + sizeof(int) * elements);
 	return ;
 }
