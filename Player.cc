@@ -36,8 +36,6 @@ int Player :: GetScore()
 	return score;
 }
 
-
-
 void Player :: CardList() 
 {
 	printf("Cards :");
@@ -58,4 +56,8 @@ void Player :: SetName(char *_name)
 char *Player :: GetName()
 {
 	return name;
+}
+
+void Player :: GainScore(int add) {
+	score += add;
 }
