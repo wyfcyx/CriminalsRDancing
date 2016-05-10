@@ -27,6 +27,12 @@ void Player :: SendCard(int pos)
 	--num_cards;
 }
 
+int Player :: PopCard()
+{
+	static int id;
+	CardList();
+	printf("Please input the index ");
+}
 int Player :: GetNumOfCards()
 {
 	return num_cards;
