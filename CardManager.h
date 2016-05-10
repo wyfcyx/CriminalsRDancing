@@ -23,11 +23,14 @@ const int add_cards[10] = {0, 0, 0, 8, 11, 14, 16, 19};
 const int total_cards[10] = {0, 0, 0, 12, 16, 20, 24, 28, 32};
 
 class CardManager {
-	int total_players;
+public:
 	int card_seq[50];
 
-	CardManager(int _);
 	bool GenerateCardsSequence();
+	CardManager(int _);
+
+private:
+	int total_players;
 };
 
 void Shuffle(int *array, int elements);
