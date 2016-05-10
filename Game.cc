@@ -72,3 +72,40 @@ void Game :: PringRanking()
 			}
 		}
 }
+
+void Game :: SubGameStart()
+{
+	/*
+	CardManager cardmanager(num_players);
+	cardmanager.GenerateCardSequence();
+	for (int i = 0; i < num_players; ++i)
+		players[i].BeforeTheSubGame();
+	int now_card = 0;
+	for (int i = 0; i < 4; ++i) {
+		for (int j = 0; j < num_players; ++j) {
+			players[i].GetCard(cardmanager.card_seq[now_card++]);
+		}
+	}
+
+	int begin_player;
+	for (int i = 0; i < num_players; ++i)
+		if (players[i].IsBeginPlayer())
+			begin_player = i;
+
+	while (1) {
+
+	}
+	*/
+}
+
+void Game :: Start()
+{
+	SetNumberOfPlayers();
+	SetWinScore();
+}
+
+void ChangePlayer(int pos)
+{
+	printf("It's player %d 's turn to operate!\n", pos + 1);
+	now_operate_player = pos;
+}

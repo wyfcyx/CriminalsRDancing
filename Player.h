@@ -6,12 +6,13 @@
 class Player {
 public:
 	int score;
-
+	char name[110];
 	Player();
 
 	void BeforeTheSubGame();
 	void GetCard(int card);
 	void SendCard(int pos);
+	void PopCard();
 	int GetNumOfCards();
 	int GetScore();
 	void CardList();
@@ -20,9 +21,11 @@ public:
 	void GainScore(int add);
 
 private:
-	int cards[MAX_CARD], num_cards;
+	int cards[MAX_CARD], num_cards, pos;
 	bool co_criminal;
-	char name[110];
+	bool IsBeginPlayer();
+	void ReceiveNotice(char *notice);
+	void SetPos(int _pos);
 };
 
 #endif // _PLAYER_H_

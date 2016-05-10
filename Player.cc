@@ -59,7 +59,26 @@ char *Player :: GetName()
 	return name;
 }
 
-void Player :: GainScore(int add) 
+void Player :: GainScore(int add)
 {
 	score += add;
+}
+
+bool Player :: IsBeginPlayer()
+{
+	for (int i = 1; i <= num_cards; ++i) {
+		if (cards[i] == FIRST)
+			return 1;
+	}
+	return 0;
+}
+
+void ReceiveNotice(char *notice)
+{
+	printf("The system tell you: %s\n", notice);
+}
+
+void SetPos(int _pos)
+{
+	pos = _pos;
 }

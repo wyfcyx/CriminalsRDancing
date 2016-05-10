@@ -14,10 +14,11 @@ public:
 	void Start();
 	void SubGameStart();
 	void PrintRanking();
+	void ChangePlayer(int pos);
 private:
 	Player players[MAX_PLAYER];
-	int num_players, win_score;
+	int num_players, win_score, now_operate_player;
 
-	CardManager *manager;
+	CardManager *manager;	
 };
 #endif // _GAME_H_
