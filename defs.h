@@ -10,6 +10,7 @@
 #define ABSENT         9 // absent
 #define RUMOR         10 // rumor
 
+
 const int MAX_CARD = 4;
 const int ALL_CARD = 32;
 const int MAX_PLAYER = 8;
