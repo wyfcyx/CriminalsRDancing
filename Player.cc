@@ -36,6 +36,8 @@ int Player :: GetScore()
 	return score;
 }
 
+
+
 void Player :: CardList() 
 {
 	printf("Cards :");

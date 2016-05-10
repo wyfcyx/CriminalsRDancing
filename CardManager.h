@@ -26,7 +26,7 @@ class CardManager {
 public:
 	int card_seq[50];
 
-	bool GenerateCardsSequence();
+	void GenerateCardsSequence();
 	CardManager(int _);
 
 private:

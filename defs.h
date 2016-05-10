@@ -1,3 +1,6 @@
+#ifndef _DEFS_H_
+#define _DEFS_H_
+
 #define CRIMINAL       0 // cirminal
 #define DETECTIVE      1 // detective
 #define GOD_DOG        2 // god dog
@@ -16,7 +19,7 @@ const int ALL_CARD = 32;
 const int MAX_PLAYER = 8;
 const int MIN_PLAYER = 3;
 const int CARD_AMOUNT[11] = {1, 4, 1, 3, 2, 1, 2, 4, 4, 5, 5}; 
-const char DESCRIPTION[11][100] = {
+const char DESCRIPTION[11][150] = {
 	"cirminal: You are the cirminal now!",
 	"detective: You can detect whether a player is the criminal.",
 	"god dog: You have a chance to ask a player to abandon a card and then he/she will pick this card up.",
@@ -55,3 +58,5 @@ const char DIG_TO_NAME_IN_CHINESE[11][100] = {
 	"不在场证明",
 	"谣言"
 };
+
+#endif // _DEFS_H_

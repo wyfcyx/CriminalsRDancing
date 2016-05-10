@@ -1,6 +1,9 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
+#include "Player.h"
+#include "defs.h"
+
 class Game {
 public:
 	Game();
