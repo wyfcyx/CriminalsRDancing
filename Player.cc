@@ -57,3 +57,7 @@ char *Player :: GetName()
 {
 	return name;
 }
+
+void Player :: GainScore(int add) {
+	score += add;
+}

@@ -61,7 +61,7 @@ int Game :: FindWinner()
 
 void Game :: SubGameStart()
 {
-
+	//QwQ
 }
 
 void Game :: Start()

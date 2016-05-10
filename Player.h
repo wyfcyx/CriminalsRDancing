@@ -14,6 +14,7 @@ public:
 	void CardList();
 	void SetName(char *_name);
 	char *GetName();
+	void GainScore(int add);
 private:
 	int cards[MAX_CARD], num_cards, score;
 	bool co_criminal;
