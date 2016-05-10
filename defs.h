@@ -29,3 +29,29 @@ const char DESCRIPTION[11][100] = {
 	"absent: When one wants to detect you, you can show this card to avoid his detection.",
 	"rumor: Every player will get a random card from his/her left player."
 };
+const char DIG_TO_NAME_IN_ENGLISH[11][15] = {
+	"CRIMINAL",
+	"DETECTIVE",
+	"GOD_DOG",
+	"WITNESS",
+	"ORDIARY",
+	"FIRST",
+	"CO_CRIMINAL",
+	"TRANSACTION",
+	"INTELLIGENCE",
+	"ABSENT",
+	"RUMOR"
+};
+const char DIG_TO_NAME_IN_CHINESE[11][100] = {
+	"犯人",
+	"侦探",
+	"神犬",
+	"目击者",
+	"普通人",
+	"第一发现者",
+	"共犯",
+	"交易",
+	"情报交换",
+	"不在场证明",
+	"谣言"
+};
