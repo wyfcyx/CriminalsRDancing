@@ -67,7 +67,8 @@ void Game :: SubGameStart()
 	}
 	Node *now = &list[start];
 
-	while (true) {							// Player loop
+	bool terminated = false;
+	while (true && !terminated) {							// Player loop
 		now = now->_next;
 		printf("Now is %s's tern.\n", now->name);
 
@@ -78,7 +79,14 @@ void Game :: SubGameStart()
 			case CRIMINAL:
 			{
 				printf("%s is cirminal.\n", now->name);
-				// TODO Subgame OVER
+				printf("Criminal wins!\n");
+				for (int i = 0; i < num_players; ++i)
+					if (players[i].co_criminal)
+						players[i].GetScore(2);
+				players[x].GetScore(2);
+				
+				terminated = true;
+				break;
 			}
 
 			case DETECTIVE:
@@ -90,21 +98,41 @@ void Game :: SubGameStart()
 					printf("%s is not criminal.\n", players[x].name);
 				else {
 					printf("%s is cirminal!\n", players[x].name);
-					// TODO Subgame OVER
+					printf("Detective wins!\n");
+					for (int i = 0; i < num_players; ++i)
+						if (!players[i].co_criminal)
+							players[i]tGetScore(1);
+					players[now->pos].GetScore(2);
+
+					terminated = true;
 				}
+				break;
 			}
 
 			case GOD_DOG:
 			{
 				printf("%s is biting %s, %s should fold a card.\n",
-					   now->name,
-					   players[x].name,
-					   players[x].name);
+						now->name,
+						players[x].name,
+						players[x].name);
 
 				int folded_card = players[x].Fold();
 				printf("%s folded %s",
 					   players[x].name,
 					   DIG_TO_NAME_IN_ENGLISH[folded_card]);
+				if (!folded_card) {
+					printf("%s is Criminal.", players[x].name);
+					printf("Dog wins!\n");
+
+					for (int i = 0; i < num_players; ++i)
+						if (!players[x].co_criminal)
+							players[x].GetScore(1);
+					
+					players[now->pos].GetScore(3);
+					
+					terminated = true;
+				}
+				break;
 			}
 
 			case WITNESS:
@@ -112,17 +140,20 @@ void Game :: SubGameStart()
 				printf("%s will watch %s's cards.\n", now->name, players[x].name);
 				now->BeWatchedPlayer(&player[x]);
 				printf("%s has watched %s's cards.\n", now->name, players[x].name);
+				break;
 			}
 
 			case ORDIARY:
 			{
 				printf("%s is an ordiary person.\n", now->name);
+				break;
 			}
 
 			case CO_CRIMINAL:
 			{
 				printf("%s is co_criminal.\n", now->name);
 				now->co_criminal = true;
+				break;
 			}
 
 			case TRANSACTION:
@@ -135,21 +166,25 @@ void Game :: SubGameStart()
 
 				now->GetCard(folded_card);
 				players[x].GetCard(_folded_card);
+				break;
 			}
 
 			case INTELLIGENCE:
 			{
 				GoRound(false);
+				break;
 			}
 
 			case ABSENT:
 			{
 				printf("%s folded card \"absent\"\n", now->name);
+				break;
 			}
 
 			case RUMOR:
 			{
 				GoRound(true);
+				break;
 			}
 		}
 	}
@@ -183,6 +218,7 @@ void Game :: Start()
 	for (int i = 0; i < num_players; ++i)
 		players[i] = Player(temp_name, this, i);
 
+	Player *winner = NULL;
 	while (true) {
 		SubGameStart();
 		
@@ -192,6 +228,23 @@ void Game :: Start()
 		PrintRanking();
 	}
 	puts("Game over!");
+	static bool winner[MAX_PLAYER];
+	memset(winner, 0, sizeof(winner));
+	int winners = 0;
+	char *name = NULL;
+	for (int i = 0; i < num_players; ++i)
+		if (players[i].score >= win_score)
+			winner[i] = true, ++winners, name = players[i].name;
+
+	if (winner == 1)
+		printf("Winner is %s.\n", name);
+	else {
+		printf("Winners are",);
+		for (int i = 0; i < num_players; ++i)
+			if (winner[i])
+				printf(" %s,", players[i].name);
+		puts(".");
+	}
 }
 
 void PlayerIsEmpty(int pos) 
@@ -206,6 +259,7 @@ void PlayerIsEmpty(int pos)
 
 void Game :: PringRanking()
 {
+	puts("Now Ranking:")
 	for (int i = 1; i <= num_players; ++i)
 		for (int j = 0; i < num_players; ++j) {
 			if(rank[j] == i) {

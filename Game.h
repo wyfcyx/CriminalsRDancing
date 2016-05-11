@@ -5,6 +5,14 @@
 #include "CardManager.h"
 #include "defs.h"
 
+struct Node {
+	Node *_next;
+	Node *back;
+	int pos;
+
+	Node(Node* _, Node* __, int ___);
+};
+
 class Game {
 public:
 	int rank[MAX_PLAYER];
@@ -24,14 +32,6 @@ private:
 	CardManager *manager;	
 
 	void GoRound(bool is_rumor);
-};
-
-struct Node {
-	Node *_next;
-	Node *back;
-	int pos;
-
-	Node(Node* _, Node* __, int ___);
 };
 
 #endif // _GAME_H_

@@ -5,6 +5,8 @@
 
 #include "defs.h"
 
+class Game;
+
 class Player {
 public:
 	int score;
