@@ -17,6 +17,7 @@ class Game {
 public:
 	int rank[MAX_PLAYER];
 	Node list[MAX_PLAYER];
+	Player players[MAX_PLAYER];
 
 	Game(int _, int __);
 	bool MaintainRanking();
@@ -26,7 +27,6 @@ public:
 	void PlayerIsEmpty(int pos);
 
 private:
-	Player players[MAX_PLAYER];
 	int num_players, win_score, now_operate_player;
 
 	CardManager *manager;	

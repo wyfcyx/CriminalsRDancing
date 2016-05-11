@@ -84,7 +84,7 @@ int Player :: PopCard(int &extra_message)
 			TryTellSystemEmpty();
 			return card;
 		}
-		if (card == ORIDINARY || card == CO_CRIMINAL || card == INTELLIGENCE || card == ABSENT || card == RUMOR) {
+		if (card == ORDIARY || card == CO_CRIMINAL || card == INTELLIGENCE || card == ABSENT || card == RUMOR) {
 			DeleteCard(id);
 			TryTellSystemEmpty();
 			return card;
@@ -102,7 +102,9 @@ int Player :: PopCard(int &extra_message)
 				return card;
 			}
 		}
+	}
 }
+
 int Player :: GetNumOfCards()
 {
 	return num_cards;

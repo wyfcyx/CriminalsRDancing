@@ -13,12 +13,12 @@ public:
 	char name[110];
 	bool co_criminal;
 	Game *current_game;
-	Player(char *_name, Game *_game, int _pos);
+	Player(char *_name, Game *_game);
 
 	void BeforeTheSubGame();
 	void GetCard(int card);
 	void DeleteCard(int pos);
-	int PopCard();
+	int PopCard(int &extra_message);
 	int GetNumOfCards();
 	void CardList();
 	bool IsBeginPlayer();
