@@ -34,7 +34,7 @@ void Player :: DeleteCard(int pos)
 
 int Player :: PopCard(int &extra_message)
 {
-	static int id, card;
+	static int id, card, player_pos;
 	static bool avaliable[10];
 	CardList();
 	std::vector<int> player_list = GetAvaliablePlayers();
@@ -48,31 +48,69 @@ int Player :: PopCard(int &extra_message)
 			printf("Please input the index of the card that you want to play: ");
 			scanf("%d", &id);
 			if (id < 1 || id > num_cards) {
-				puts("Please input a legal number!Retry!");
+				puts("Please input a legal number!Re-try!");
 				continue;
 			}
 			else
 				break;
 		}
 		card = cards[id];
-		switch (card) {
-			case CRIMINAL: 
+		if (card == CRIMINAL) {
+			if (num_cards > 1) {
+				puts("The CRIMINAL card must be you last card.");
+				continue;
+			}
+			else {
+				DeleteCard(id);
+				TryTellSystemEmpty();
+				return card;
+			}
 		}
-
+		if (card == DETECTIVE) {
+			if (num_cards > 2) {
+				puts("You have too much cards to play the DETECTIVE card.");
+				continue;
+			}
+			else {
+				DeleteCard(id);
+				extra_message = ReadAnotherPlayerFromTerminal(avaliable);
+				TryTellSystemEmpty();
+				return card;
+			}
+		}
+		if (card == GOD_DOG || card == WITNESS) {
+			DeleteCard(id);
+			extra_message = ReadAnotherPlayerFromTerminal(avaliable);
+			TryTellSystemEmpty();
+			return card;
+		}
+		if (card == ORIDINARY || card == CO_CRIMINAL || card == INTELLIGENCE || card == ABSENT || card == RUMOR) {
+			DeleteCard(id);
+			TryTellSystemEmpty();
+			return card;
+		}
+		if (card == TRANSACTION) {
+			if (num_cards == 1) {
+				DeleteCard(id);
+				TryTellSystemEmpty();
+				extra_message = -1;
+				return card;
+			}
+			else {
+				DeleteCard(id);
+				extra_message = ReadAnotherPlayerFromTerminal(avaliable);
+				return card;
+			}
+		}
 }
 int Player :: GetNumOfCards()
 {
 	return num_cards;
 }
 
-int Player :: GetScore()
-{
-	return score;
-}
-
 void Player :: CardList() 
 {
-	printf("Cards: ");
+	printf("Cards of player %d :", pos);
 	if (!num_cards)
 		puts(" no cards.");
 	else {
@@ -82,26 +120,13 @@ void Player :: CardList()
 	}
 }
 
-void Player :: SetName(char *_name)
-{
-	strcpy(name, _name);
-}
-
-char *Player :: GetName()
-{
-	return name;
-}
-
-void Player :: GainScore(int add)
-{
-	score += add;
-}
-
 bool Player :: IsBeginPlayer()
 {
 	for (int i = 1; i <= num_cards; ++i) {
-		if (cards[i] == FIRST)
+		if (cards[i] == FIRST) {
+			DeleteCard(i);
 			return true;
+		}
 	}
 	return false;
 }
@@ -111,9 +136,10 @@ void ReceiveNotice(char *notice)
 	printf("The system tell you: %s\n", notice);
 }
 
-void TellSystemEmpty()
+void TryTellSystemEmpty()
 {
-	current_game->PlayerIsEmpty(pos);
+	if (!num_cards)
+		current_game->PlayerIsEmpty(pos);
 }
 
 bool Player :: HaveAbsent()
@@ -166,7 +192,7 @@ int Player :: Fold()
 		printf("Please input the index of the card that you want to play: ");
 		scanf("%d", &id);
 		if (id < 1 || id > num_cards) {
-			puts("Please input a legal number!Retry!");
+			puts("Please input a legal number!Re-try!");
 			continue;
 		}
 		else
@@ -208,4 +234,27 @@ void Player :: PrintPlayerList(std::vector<int> player_list)
 	printf("Avaliable Players List:\n");
 	for (int i = 0; i < player_list.size(); ++i)
 		printf("Player %d has %d cards.\n", player_list[i], current_game->players[player_list[i]].num_cards);
+}
+
+int Player :: ReadAnotherPlayerFromTerminal(bool avaliable[])
+{
+	static int player_pos;
+	while (true) {
+		printf("Please input a player id: ");
+		scanf("%d", &player_pos);
+		if (player_pos < 0 || player_pos > 7) {
+			puts("Please input a legal number in range [0,7]!");
+			continue;
+		}
+		else if (player_pos == pos) {
+			puts("The player can't be yourself!");
+			continue;
+		}
+		else if (!avaliable[player_pos]) {
+			puts("The player isn't in the game now!");
+			continue;
+		}
+		else
+			return player_pos;
+	}
 }

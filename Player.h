@@ -20,22 +20,21 @@ public:
 	void DeleteCard(int pos);
 	int PopCard();
 	int GetNumOfCards();
-	int GetScore();
 	void CardList();
-	void GainScore(int add);
 	bool IsBeginPlayer();
 	void ReceiveNotice(char *notice);
-	void TellSystemEmpty();
+	void TryTellSystemEmpty();
 	bool HaveAbsent();
 	bool ShowAbsent();
 	bool IsCriminal();
 	int Fold();
 	int RandowFold();
-	std::vector<int> GetAvaliablePlayers();
-	void PrintPlayerList(std::vector<int> player_list);
 
 private:
 	int cards[MAX_CARD], num_cards, pos;
+	std::vector<int> GetAvaliablePlayers();
+	void PrintPlayerList(std::vector<int> player_list);
+	int ReadAnotherPlayerFromTerminal(bool avaliable[]);
 };
 
 #endif // _PLAYER_H_

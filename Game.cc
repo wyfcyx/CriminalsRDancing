@@ -158,14 +158,19 @@ void Game :: SubGameStart()
 
 			case TRANSACTION:
 			{
-				printf("%s wants to transaction with %s.\n", now->name, players[x].name);
-				printf("%s gives %s a card.\n", now->name, players[x].name);
-				int folded_card = now->Fold();
-				printf("%s gives %s a card.\n", players[x].name, now->name);
-				int _folded_card = players[x].Fold();
+				if (x != -1) {
+					printf("%s wants to transaction with %s.\n", now->name, players[x].name);
+					printf("%s gives %s a card.\n", now->name, players[x].name);
+					int folded_card = now->Fold();
+					printf("%s gives %s a card.\n", players[x].name, now->name);
+					int _folded_card = players[x].Fold();
 
-				now->GetCard(folded_card);
-				players[x].GetCard(_folded_card);
+					now->GetCard(folded_card);
+					players[x].GetCard(_folded_card);
+				}
+				else {
+					printf("%s give up the TRANSACTION card.\n", now->name);
+				}
 				break;
 			}
 
@@ -201,7 +206,7 @@ void Game :: GoRound(bool is_rumor)
 			temp[tot++] = p->Fold();
 		}
 		else
-			temp[tot++] = p->RandomRold();
+			temp[tot++] = p->RandomFold();
 		p = p->_next;
 	}while (p != now);
 
