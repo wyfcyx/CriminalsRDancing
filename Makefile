@@ -6,16 +6,16 @@ main: $(objects)
 	clang++ -omain $(objects) -g -Wall
 
 main.o: main.cc defs.h
-	clang++ -c main.cc
+	clang++ -c -g main.cc
 
 CardManager.o: CardManager.cc CardManager.h defs.h
-	clang++ -c CardManager.cc
+	clang++ -c -g CardManager.cc
 
 Player.o: Player.cc Player.h defs.h
-	clang++ -c Player.cc
+	clang++ -c -g Player.cc
 
 Game.o: Game.cc Game.h Player.h CardManager.h defs.h
-	clang++ -c Game.cc
+	clang++ -c -g Game.cc
 
 clean:
 	rm main $(objects)

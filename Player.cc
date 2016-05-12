@@ -18,7 +18,9 @@ Player :: Player(char *_name, Game *_game, int _pos)
 	strcpy(name, _name);
 	current_game = _game;
 	pos = _pos;
+
 	score = 0;
+	memset(cards, 0, sizeof(cards));
 }
 
 void Player :: BeforeTheSubGame()
@@ -29,13 +31,14 @@ void Player :: BeforeTheSubGame()
 
 void Player :: GetCard(int card)
 {
-	cards[++num_cards] = card;
+	cards[num_cards++] = card;
+	printf("The card is %d, num_cards = %d\n", card, num_cards);
 }
 
 void Player :: DeleteCard(int pos)
 {
 	//printf("You played the card %s :", DIG_TO_NAME_IN_ENGLISH[cards[pos]]);
-	for (int i = pos; i < num_cards; ++i)
+	for (int i = pos; i < num_cards - 1; ++i)
 		cards[i] = cards[i + 1];
 	--num_cards;
 }
@@ -62,7 +65,7 @@ int Player :: PopCard(int &extra_message)
 			else
 				break;
 		}
-		card = cards[id];
+		card = cards[id - 1];
 		if (card == CRIMINAL) {
 			if (num_cards > 1) {
 				puts("The CRIMINAL card must be you last card.");
@@ -115,7 +118,7 @@ int Player :: PopCard(int &extra_message)
 
 int Player :: GetNumOfCards()
 {
-	return num_cards;
+	return num_cards + 1;
 }
 
 void Player :: CardList() 
@@ -124,7 +127,7 @@ void Player :: CardList()
 	if (!num_cards)
 		puts(" no cards.");
 	else {
-		for (int i = 1; i <= num_cards; ++i)
+		for (int i = 0; i < num_cards; ++i)
 			printf(" %s", DIG_TO_NAME_IN_ENGLISH[cards[i]]);
 		puts("");
 	}
@@ -132,7 +135,7 @@ void Player :: CardList()
 
 bool Player :: IsBeginPlayer()
 {
-	for (int i = 1; i <= num_cards; ++i) {
+	for (int i = 0; i < num_cards; ++i) {
 		if (cards[i] == FIRST) {
 			DeleteCard(i);
 			return true;
@@ -154,7 +157,7 @@ void Player :: TryTellSystemEmpty()
 
 bool Player :: HaveAbsent()
 {
-	for (int i = 1; i <= num_cards; ++i) {
+	for (int i = 0; i < num_cards; ++i) {
 		if (cards[i] == ABSENT)
 			return true;
 	}
@@ -186,7 +189,7 @@ bool Player :: ShowAbsent()
 
 bool Player :: IsCriminal()
 {
-	for (int i = 1; i <= num_cards; ++i) {
+	for (int i = 0; i < num_cards; ++i) {
 		if (cards[i] == CRIMINAL)
 			return true;
 	}
@@ -208,7 +211,7 @@ int Player :: Fold()
 		else
 			break;
 	}
-	card = cards[id];
+	card = cards[id - 1];
 	DeleteCard(id);
 	return card;
 }
@@ -216,7 +219,7 @@ int Player :: Fold()
 int Player :: RandomFold()
 {
 	static int id, card;
-	id = rand() % num_cards + 1;
+	id = rand() % num_cards;
 	card = cards[id];
 	DeleteCard(id);
 	return card;

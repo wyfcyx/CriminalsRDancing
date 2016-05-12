@@ -70,7 +70,7 @@ void Game :: SubGameStart()
 	bool terminated = false;
 	while (true && !terminated) {							// Player loop
 		now = now->_next;
-		printf("Now is %s's tern.\n", players[now->pos].name);
+		printf("Now is %s's turn.\n", players[now->pos].name);
 
 		int x = 0;
 		int card = players[now->pos].PopCard(x);
