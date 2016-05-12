@@ -32,7 +32,7 @@ void Player :: BeforeTheSubGame()
 void Player :: GetCard(int card)
 {
 	cards[num_cards++] = card;
-	printf("The card is %d, num_cards = %d\n", card, num_cards);
+	//printf("The card is %d, num_cards = %d\n", card, num_cards);
 }
 
 void Player :: DeleteCard(int pos)
@@ -72,7 +72,7 @@ int Player :: PopCard(int &extra_message)
 				continue;
 			}
 			else {
-				DeleteCard(id);
+				DeleteCard(id - 1);
 				TryTellSystemEmpty();
 				return card;
 			}
@@ -83,32 +83,32 @@ int Player :: PopCard(int &extra_message)
 				continue;
 			}
 			else {
-				DeleteCard(id);
+				DeleteCard(id - 1);
 				extra_message = ReadAnotherPlayerFromTerminal(avaliable);
 				TryTellSystemEmpty();
 				return card;
 			}
 		}
 		if (card == GOD_DOG || card == WITNESS) {
-			DeleteCard(id);
+			DeleteCard(id - 1);
 			extra_message = ReadAnotherPlayerFromTerminal(avaliable);
 			TryTellSystemEmpty();
 			return card;
 		}
 		if (card == ORDIARY || card == CO_CRIMINAL || card == INTELLIGENCE || card == ABSENT || card == RUMOR) {
-			DeleteCard(id);
+			DeleteCard(id - 1);
 			TryTellSystemEmpty();
 			return card;
 		}
 		if (card == TRANSACTION) {
 			if (num_cards == 1) {
-				DeleteCard(id);
+				DeleteCard(id - 1);
 				TryTellSystemEmpty();
 				extra_message = -1;
 				return card;
 			}
 			else {
-				DeleteCard(id);
+				DeleteCard(id - 1);
 				extra_message = ReadAnotherPlayerFromTerminal(avaliable);
 				return card;
 			}
@@ -212,7 +212,7 @@ int Player :: Fold()
 			break;
 	}
 	card = cards[id - 1];
-	DeleteCard(id);
+	DeleteCard(id - 1);
 	return card;
 }
 
@@ -237,15 +237,15 @@ void Player :: BeWatchedPlayer(Player player)
 }
 std::vector<int> Player :: GetAvaliablePlayers()
 {
-	static Node it;
+	static Node *it;
 	std::vector<int> player_list;
-	it = current_game->list[0];
+	it = &(current_game->list[0]);
 	//printf("Avaliable Players List:\n");
 	while (true) {
 		//printf("Player %d has %d cards.\n", it->pos, current_game->players[it->pos].num_cards);
-		player_list.push_back(it.pos);
-		it = *(it._next);
-		if (it.pos == current_game->list[0].pos)
+		player_list.push_back(it->pos);
+		it = it->_next;
+		if (it->pos == current_game->list[0].pos)
 			break;
 	}
 	sort(player_list.begin(), player_list.end());

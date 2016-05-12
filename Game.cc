@@ -62,7 +62,7 @@ void Game :: SubGameStart()
 	memset(list, 0, sizeof(list));
 	for (int i = 0; i < num_players; ++i) {
 		list[i].pos = i;
-		list[i]._next = (i + 2 == num_players) ? &list[0] : &list[i + 1];
+		list[i]._next = (i + 1 == num_players) ? &list[0] : &list[i + 1];
 		list[i].back = !i ? &list[num_players] : &list[i - 1];
 	}
 	Node *now = &list[start];
@@ -219,14 +219,21 @@ void Game :: GoRound(bool is_rumor, Node *now)
 
 void Game :: Start()
 {
-	char temp_name[10] = "test name";
-	for (int i = 0; i < num_players; ++i)
+	char temp_name[10]; 
+	for (int i = 0; i < num_players; ++i) {
+		sprintf(temp_name, "Player %d", i);
 		players[i] = Player(temp_name, this, i);
+	}
 
 	Player *winner = NULL;
+	int _round = 0;
 	while (true) {
+		printf("Game Round %d Start!\n", ++_round);
+
 		SubGameStart();
-		
+
+		printf("Game Round %d Ended!\n", _round);
+
 		if (MaintainRanking())
 			break;
 
