@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstring>
 #include <algorithm>
+#include <sys/time.h>
 
 #include "CardManager.h"
 
@@ -50,3 +51,4 @@ void Shuffle(int *array, int elements)
 		printf("%d ", array[i]);
 	return ;
 }
+
