@@ -10,6 +10,7 @@ struct Node {
 	Node *back;
 	int pos;
 
+	Node();
 	Node(Node* _, Node* __, int ___);
 };
 
@@ -31,7 +32,7 @@ private:
 
 	CardManager *manager;	
 
-	void GoRound(bool is_rumor);
+	void GoRound(bool is_rumor, Node *now);
 };
 
 #endif // _GAME_H_

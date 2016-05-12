@@ -8,8 +8,16 @@
 #include "Player.h"
 #include "Game.h"
 
-Player :: Player(char *_name, Game *_game)
+Player :: Player()
 {
+
+}
+
+Player :: Player(char *_name, Game *_game, int _pos)
+{
+	strcpy(name, _name);
+	current_game = _game;
+	pos = _pos;
 	score = 0;
 }
 
@@ -133,12 +141,12 @@ bool Player :: IsBeginPlayer()
 	return false;
 }
 
-void ReceiveNotice(char *notice)
+void Player :: ReceiveNotice(char *notice)
 {
 	printf("The system tell you: %s\n", notice);
 }
 
-void TryTellSystemEmpty()
+void Player :: TryTellSystemEmpty()
 {
 	if (!num_cards)
 		current_game->PlayerIsEmpty(pos);
@@ -214,17 +222,27 @@ int Player :: RandomFold()
 	return card;
 }
 
+void Player :: GetScore(int add)
+{
+	score += add;
+}
+
+void Player :: BeWatchedPlayer(Player player)
+{
+	printf("Player %d's card list:\n", player.pos);
+	player.CardList();
+}
 std::vector<int> Player :: GetAvaliablePlayers()
 {
-	static Node *it;
-	vector<int> player_list;
+	static Node it;
+	std::vector<int> player_list;
 	it = current_game->list[0];
 	//printf("Avaliable Players List:\n");
 	while (true) {
 		//printf("Player %d has %d cards.\n", it->pos, current_game->players[it->pos].num_cards);
-		player_list.push_back(it->pos);
-		it = it->_next;
-		if (it == current_game->list[0])
+		player_list.push_back(it.pos);
+		it = *(it._next);
+		if (it.pos == current_game->list[0].pos)
 			break;
 	}
 	sort(player_list.begin(), player_list.end());

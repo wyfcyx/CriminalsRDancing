@@ -13,7 +13,8 @@ public:
 	char name[110];
 	bool co_criminal;
 	Game *current_game;
-	Player(char *_name, Game *_game);
+	Player();
+	Player(char *_name, Game *_game, int _pos);
 
 	void BeforeTheSubGame();
 	void GetCard(int card);
@@ -28,7 +29,9 @@ public:
 	bool ShowAbsent();
 	bool IsCriminal();
 	int Fold();
-	int RandowFold();
+	int RandomFold();
+	void GetScore(int add);
+	void BeWatchedPlayer(Player player);
 
 private:
 	int cards[MAX_CARD], num_cards, pos;
