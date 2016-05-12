@@ -1,0 +1,15 @@
+# CMake minimum version
+cmake_minimum_required (VERSION 2.8)
+
+# Project Infomation
+project (CriminalsRDancing)
+
+set (CMAKE_BUILD_TYPE "Debug")
+set (CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAS} -O0 -Wall -g -ggdb")
+set (CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+
+# Add dirs
+aux_source_directory (source SRC_DIR)
+
+# Targets
+add_executable (main ${SRC_DIR})
