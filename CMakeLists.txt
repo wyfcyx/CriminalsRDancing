@@ -4,6 +4,8 @@ cmake_minimum_required (VERSION 2.8)
 # Project Infomation
 project (CriminalsRDancing)
 
+add_compile_options(-std=c++11)
+
 set (CMAKE_BUILD_TYPE "Debug")
 set (CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAS} -O0 -Wall -g -ggdb")
 set (CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")

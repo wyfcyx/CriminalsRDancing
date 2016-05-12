@@ -1,7 +1,7 @@
 #include <ctime>
+#include <random>
 #include <cstdio>
 #include <cstring>
-#include <cstdlib>
 #include <algorithm>
 
 #include "CardManager.h"
@@ -43,6 +43,10 @@ void CardManager :: GenerateCardsSequence()
 void Shuffle(int *array, int elements)
 {
 	srand((unsigned int)time(NULL));
-	std::random_shuffle(array, array + elements);
+	unsigned int seed = (unsigned int)rand();
+
+	shuffle(array, array + elements, std::default_random_engine(seed));
+	for (int i = 0; i < elements; ++i)
+		printf("%d ", array[i]);
 	return ;
 }
