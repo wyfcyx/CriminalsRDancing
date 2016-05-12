@@ -45,7 +45,7 @@ void Player :: DeleteCard(int pos)
 
 int Player :: PopCard(int &extra_message)
 {
-	static int id, card, player_pos;
+	static int id, card;
 	static bool avaliable[10];
 	CardList();
 	std::vector<int> player_list = GetAvaliablePlayers();
@@ -200,7 +200,6 @@ int Player :: Fold()
 {
 	CardList();
 	static int id, card;
-	static bool avaliable[10];
 	while (true) {
 		printf("Please input the index of the card that you want to play: ");
 		scanf("%d", &id);
