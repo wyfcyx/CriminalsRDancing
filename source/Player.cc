@@ -45,11 +45,13 @@ void Player :: DeleteCard(int pos)
 
 int Player :: PopCard(int &extra_message)
 {
-	static int id, card;
+	static int id, card, player_pos;
 	static bool avaliable[10];
+	puts("------------------------------------------------------");
 	CardList();
 	std::vector<int> player_list = GetAvaliablePlayers();
 	PrintPlayerList(player_list);
+	puts("------------------------------------------------------\n");
 	memset(avaliable, 0, sizeof avaliable);
 	for (int i = 0; i < player_list.size(); ++i)
 		avaliable[player_list[i]] = 1;
@@ -173,7 +175,7 @@ bool Player :: ShowAbsent()
 		while (true) {
 			printf("Do you want to show your ABSENT card?If do then input number 1 else input 0: ");
 			scanf("%d", &_);
-			if (_ != 1 || _ != 0) {
+			if (_ != 1 && _ != 0) {
 				puts("Please input 0 or 1!Retry!");
 				continue;
 			}
@@ -200,6 +202,7 @@ int Player :: Fold()
 {
 	CardList();
 	static int id, card;
+	static bool avaliable[10];
 	while (true) {
 		printf("Please input the index of the card that you want to play: ");
 		scanf("%d", &id);

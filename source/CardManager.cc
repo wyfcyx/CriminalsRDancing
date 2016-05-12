@@ -3,6 +3,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <algorithm>
+#include <sys/time.h>
 
 #include "CardManager.h"
 
@@ -40,9 +41,18 @@ void CardManager :: GenerateCardsSequence()
 	return ;
 }
 
-void Shuffle(int *array, int elements)
+void Shuffle(int array[], int elements)
 {
-	srand((unsigned int)time(NULL));
-	std::random_shuffle(array, array + elements);
+	//srand((unsigned int)time(NULL));
+	static timeval curse;
+	gettimeofday(&curse, 0);
+	srand(curse.tv_usec);
+
+	static int pos;
+	for (int i = 0; i < elements; ++i) {
+		pos = rand() % (i + 1);
+		if (pos < i)
+			std::swap(array[pos], array[i]);
+	}
 	return ;
 }
