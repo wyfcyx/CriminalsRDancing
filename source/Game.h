@@ -28,7 +28,7 @@ public:
 	void PlayerIsEmpty(int pos);
 
 private:
-	int num_players, win_score, now_operate_player;
+	int num_players, win_score;
 
 	CardManager *manager;	
 

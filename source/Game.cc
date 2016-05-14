@@ -239,7 +239,6 @@ void Game :: Start()
 		players[i] = Player(temp_name, this, i);
 	}
 
-	Player *winner = NULL;
 	int _round = 0;
 	while (true) {
 		printf("Game Round %d Start!\n", ++_round);
