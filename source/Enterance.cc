@@ -43,7 +43,7 @@ void Enterance()
 		puts("This number is invalid.\nPlease re-enter a valid number.");
 	}
 	int players = num;
-	
+
 	printf("Enter the minimum score to win: ");
 	while (true) {
 		scanf("%d", &num);
@@ -58,3 +58,4 @@ void Enterance()
 
 	return ;
 }
+

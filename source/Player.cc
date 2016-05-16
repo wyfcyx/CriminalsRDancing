@@ -123,7 +123,7 @@ int Player :: GetNumOfCards()
 	return num_cards + 1;
 }
 
-void Player :: CardList() 
+void Player :: CardList()
 {
 	printf("Cards of player %d :", pos);
 	if (!num_cards)
@@ -282,3 +282,4 @@ int Player :: ReadAnotherPlayerFromTerminal(bool avaliable[])
 			return player_pos;
 	}
 }
+

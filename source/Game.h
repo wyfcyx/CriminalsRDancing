@@ -30,9 +30,10 @@ public:
 private:
 	int num_players, win_score;
 
-	CardManager *manager;	
+	CardManager *manager;
 
 	void GoRound(bool is_rumor, Node *now);
 };
 
 #endif // _GAME_H_
+
