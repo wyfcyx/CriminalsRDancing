@@ -24,7 +24,7 @@ bool Game :: MaintainRanking()
 	score.clear();
 	for (int i = 0; i < num_players; ++i)
 		score.insert(std::make_pair(players[i].score, i));
-	
+
 	int current_rank = 0, last_rank = 0, last_score = 0;
 	for (std::map<int, int>::reverse_iterator i = score.rbegin(); i != score.rend(); ++i, ++current_rank) {
 
@@ -32,7 +32,7 @@ bool Game :: MaintainRanking()
 			rank[i->second] = current_rank;
 		else
 			rank[i->second] = last_rank;
-		
+
 		last_score = i->first;
 		last_rank = rank[i->second];
 	}
@@ -92,27 +92,32 @@ void Game :: SubGameStart()
 					if (players[i].co_criminal)
 						players[i].GetScore(2);
 				players[x].GetScore(2);
-				
+
 				terminated = true;
 				break;
 			}
 
 			case DETECTIVE:
 			{
-				printf("System Message : %s detects %s.\n", players[now->pos].name, players[x].name);
-				if(players[x].ShowAbsent())
-					printf("System Message : %s is absent!\n", players[x].name);
-				else if(!players[x].IsCriminal())
-					printf("System Message : %s is not criminal.\n", players[x].name);
+				if (x == -1) {
+					printf("System Message : %s folded card \"DETECTIVE\"", players[now->pos].name);
+				}
 				else {
-					printf("System Message : %s is cirminal!\n", players[x].name);
-					printf("System Message : Detective wins!\n");
-					for (int i = 0; i < num_players; ++i)
-						if (!players[i].co_criminal)
-							players[i].GetScore(1);
-					players[now->pos].GetScore(2);
+					printf("System Message : %s detects %s.\n", players[now->pos].name, players[x].name);
+					if(players[x].ShowAbsent())
+						printf("System Message : %s is absent!\n", players[x].name);
+					else if(!players[x].IsCriminal())
+						printf("System Message : %s is not criminal.\n", players[x].name);
+					else {
+						printf("System Message : %s is cirminal!\n", players[x].name);
+						printf("System Message : Detective wins!\n");
+						for (int i = 0; i < num_players; ++i)
+							if (!players[i].co_criminal)
+								players[i].GetScore(1);
+						players[now->pos].GetScore(2);
 
-					terminated = true;
+						terminated = true;
+					}
 				}
 				break;
 			}
@@ -126,8 +131,13 @@ void Game :: SubGameStart()
 
 				int folded_card = players[x].Fold();
 				printf("System Message : %s folded %s.\n",
+<<<<<<< HEAD
 					   players[x].name,
 					   DIG_TO_NAME_IN_ENGLISH[folded_card]);
+=======
+						players[x].name,
+						DIG_TO_NAME_IN_ENGLISH[folded_card]);
+>>>>>>> dev
 				if (!folded_card) {
 					printf("System Message : %s is Criminal.\n", players[x].name);
 					printf("System Message : Dog wins!\n");
@@ -135,9 +145,9 @@ void Game :: SubGameStart()
 					for (int i = 0; i < num_players; ++i)
 						if (!players[x].co_criminal)
 							players[x].GetScore(1);
-					
+
 					players[now->pos].GetScore(3);
-					
+
 					terminated = true;
 				}
 				break;
@@ -233,13 +243,12 @@ void Game :: GoRound(bool is_rumor, Node *now)
 
 void Game :: Start()
 {
-	char temp_name[10]; 
+	char temp_name[10];
 	for (int i = 0; i < num_players; ++i) {
-		sprintf(temp_name, "Player %d", i);
+		sprintf(temp_name, "Player %d", i + 1);
 		players[i] = Player(temp_name, this, i);
 	}
 
-	Player *winner = NULL;
 	int _round = 0;
 	while (true) {
 		printf("Game Round %d Start!\n", ++_round);
@@ -273,7 +282,7 @@ void Game :: Start()
 	}
 }
 
-void Game :: PlayerIsEmpty(int pos) 
+void Game :: PlayerIsEmpty(int pos)
 {
 	for (int i = 0; i < num_players; ++i)
 		if(list[i].pos == pos) {
@@ -307,4 +316,9 @@ Node :: Node(Node *_, Node *__, int ___)
 Node :: Node()
 {
 
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> dev

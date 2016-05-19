@@ -9,7 +9,7 @@ const int predealed_sequence[32] = {
 	ABSENT, // 5 player
 	DETECTIVE, CO_CRIMINAL, // 6 player
 	ABSENT, // 7 player
-	DETECTIVE, DETECTIVE, 
+	DETECTIVE, DETECTIVE,
 	GOD_DOG,
 	WITNESS, WITNESS, WITNESS,
 	ORDIARY, ORDIARY,

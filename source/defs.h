@@ -18,7 +18,7 @@ const int MAX_CARD = 4;
 const int ALL_CARD = 32;
 const int MAX_PLAYER = 8;
 const int MIN_PLAYER = 3;
-const int CARD_AMOUNT[11] = {1, 4, 1, 3, 2, 1, 2, 4, 4, 5, 5}; 
+const int CARD_AMOUNT[11] = {1, 4, 1, 3, 2, 1, 2, 4, 4, 5, 5};
 const char DESCRIPTION[11][150] = {
 	"cirminal: You are the cirminal now!",
 	"detective: You can detect whether a player is the criminal.",
