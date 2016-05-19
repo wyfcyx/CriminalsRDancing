@@ -31,7 +31,7 @@ void Player :: BeforeTheSubGame()
 
 void Player :: GetCard(int card)
 {
-	(cards[num_cards++] = card;
+	cards[num_cards++] = card;
 	MaintainCards();
 	//printf("The card is %d, num_cards = %d\n", card, num_cards);
 }
@@ -108,7 +108,7 @@ int Player :: PopCard(int &extra_message)
 			else {
 				DeleteCard(id - 1);
 				TryTellSystemEmpty();
-				extra_message = ReadAnotherPlayerFromTerminal();
+				extra_message = ReadAnotherPlayerFromTerminal(avaliable);
 				return card;
 			}
 			
@@ -240,19 +240,19 @@ int Player :: Fold()
 }
 
 int Player :: GOD_DOG_Fold(int dogplayer) {
-	Fold();
+	return Fold();
 }
 
 int Player :: TRANSACTION_Fold(int another_player) {
-	Fold();
+	return Fold();
 }
 
 int Player :: RUMOR_Fold() {
-	RandomFold();
+	return RandomFold();
 }
 
 int Player :: INTELLIGENCE_Fold() {
-	Fold();
+	return Fold();
 }
 
 int Player :: RandomFold()
