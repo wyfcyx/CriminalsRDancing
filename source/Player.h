@@ -19,6 +19,7 @@ public:
 	void BeforeTheSubGame();
 	void GetCard(int card);
 	void DeleteCard(int pos);
+	bool CannotPopCard();
 	int PopCard(int &extra_message);
 	int GetNumOfCards();
 	void CardList();
@@ -30,8 +31,13 @@ public:
 	bool IsCriminal();
 	int Fold();
 	int RandomFold();
+	int GOD_DOG_Fold(int dogplayer);
+	int TRANSACTION_Fold(int another_player);
+	int RUMOR_Fold();
+	int INTELLIGENCE_Fold();
 	void GetScore(int add);
 	void BeWatchedPlayer(Player player);
+	void MaintainCards();
 
 private:
 	int cards[MAX_CARD], num_cards, pos;

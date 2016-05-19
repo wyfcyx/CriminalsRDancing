@@ -99,20 +99,25 @@ void Game :: SubGameStart()
 
 			case DETECTIVE:
 			{
-				printf("System Message : %s detects %s.\n", players[now->pos].name, players[x].name);
-				if(players[x].ShowAbsent())
-					printf("System Message : %s is absent!\n", players[x].name);
-				else if(!players[x].IsCriminal())
-					printf("System Message : %s is not criminal.\n", players[x].name);
+				if (x == -1) {
+					printf("System Message : %s folded card \"DETECTIVE\"", players[now->pos].name);
+				}
 				else {
-					printf("System Message : %s is cirminal!\n", players[x].name);
-					printf("System Message : Detective wins!\n");
-					for (int i = 0; i < num_players; ++i)
-						if (!players[i].co_criminal)
-							players[i].GetScore(1);
-					players[now->pos].GetScore(2);
+					printf("System Message : %s detects %s.\n", players[now->pos].name, players[x].name);
+					if(players[x].ShowAbsent())
+						printf("System Message : %s is absent!\n", players[x].name);
+					else if(!players[x].IsCriminal())
+						printf("System Message : %s is not criminal.\n", players[x].name);
+					else {
+						printf("System Message : %s is cirminal!\n", players[x].name);
+						printf("System Message : Detective wins!\n");
+						for (int i = 0; i < num_players; ++i)
+							if (!players[i].co_criminal)
+								players[i].GetScore(1);
+						players[now->pos].GetScore(2);
 
-					terminated = true;
+						terminated = true;
+					}
 				}
 				break;
 			}
@@ -235,7 +240,7 @@ void Game :: Start()
 {
 	char temp_name[10];
 	for (int i = 0; i < num_players; ++i) {
-		sprintf(temp_name, "Player %d", i);
+		sprintf(temp_name, "Player %d", i + 1);
 		players[i] = Player(temp_name, this, i);
 	}
 
