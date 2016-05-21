@@ -131,13 +131,8 @@ void Game :: SubGameStart()
 
 				int folded_card = players[x].Fold();
 				printf("System Message : %s folded %s.\n",
-<<<<<<< HEAD
-					   players[x].name,
-					   DIG_TO_NAME_IN_ENGLISH[folded_card]);
-=======
 						players[x].name,
 						DIG_TO_NAME_IN_ENGLISH[folded_card]);
->>>>>>> dev
 				if (!folded_card) {
 					printf("System Message : %s is Criminal.\n", players[x].name);
 					printf("System Message : Dog wins!\n");
@@ -316,9 +311,4 @@ Node :: Node(Node *_, Node *__, int ___)
 Node :: Node()
 {
 
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> dev
