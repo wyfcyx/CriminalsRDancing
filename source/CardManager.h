@@ -36,4 +36,3 @@ private:
 void Shuffle(int *array, int elements);
 
 #endif // _CARD_MANAGER_H_
-

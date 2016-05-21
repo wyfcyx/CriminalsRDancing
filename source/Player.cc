@@ -32,6 +32,7 @@ void Player :: BeforeTheSubGame()
 void Player :: GetCard(int card)
 {
 	cards[num_cards++] = card;
+	MaintainCards();
 	//printf("The card is %d, num_cards = %d\n", card, num_cards);
 }
 
@@ -41,6 +42,20 @@ void Player :: DeleteCard(int pos)
 	for (int i = pos; i < num_cards - 1; ++i)
 		cards[i] = cards[i + 1];
 	--num_cards;
+	if (num_cards > 0)
+		MaintainCards();
+}
+
+bool Player :: CannotPopCard()
+{
+	if (num_cards <= 2)
+		return false;
+	for (int i = 0; i < num_cards; ++i) {
+		if (cards[i] != CRIMINAL && cards[i] != DETECTIVE) {
+			return false;
+		}
+	}
+	return true;
 }
 
 int Player :: PopCard(int &extra_message)
@@ -80,16 +95,23 @@ int Player :: PopCard(int &extra_message)
 			}
 		}
 		if (card == DETECTIVE) {
-			if (num_cards > 2) {
-				puts("You have too much cards to play the DETECTIVE card.");
+			if (CannotPopCard()) {
+				DeleteCard(id - 1);
+				TryTellSystemEmpty();
+				extra_message = -1;
+				return card;
+			}
+			else if (num_cards > 2) {
+				puts("You have more than 2 cards!");
 				continue;
 			}
 			else {
 				DeleteCard(id - 1);
-				extra_message = ReadAnotherPlayerFromTerminal(avaliable);
 				TryTellSystemEmpty();
+				extra_message = ReadAnotherPlayerFromTerminal(avaliable);
 				return card;
 			}
+			
 		}
 		if (card == GOD_DOG || card == WITNESS) {
 			DeleteCard(id - 1);
@@ -217,6 +239,22 @@ int Player :: Fold()
 	return card;
 }
 
+int Player :: GOD_DOG_Fold(int dogplayer) {
+	return Fold();
+}
+
+int Player :: TRANSACTION_Fold(int another_player) {
+	return Fold();
+}
+
+int Player :: RUMOR_Fold() {
+	return RandomFold();
+}
+
+int Player :: INTELLIGENCE_Fold() {
+	return Fold();
+}
+
 int Player :: RandomFold()
 {
 	static int id, card;
@@ -235,6 +273,10 @@ void Player :: BeWatchedPlayer(Player player)
 {
 	printf("Player %d's card list:\n", player.pos);
 	player.CardList();
+}
+void Player :: MaintainCards()
+{
+	std::sort(cards, cards + num_cards);
 }
 std::vector<int> Player :: GetAvaliablePlayers()
 {

@@ -60,4 +60,3 @@ const char DIG_TO_NAME_IN_CHINESE[11][100] = {
 };
 
 #endif // _DEFS_H_
-
