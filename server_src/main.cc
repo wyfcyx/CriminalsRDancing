@@ -1,12 +1,6 @@
-#include <cstdio>
-#include <cstdlib>
-
-#include "Enterance.h"
+#include "Network_server.h"
 
 int main()
 {
 
-	Enterance();
-
-	return EXIT_SUCCESS;
 }
