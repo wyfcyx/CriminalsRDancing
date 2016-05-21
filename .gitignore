@@ -102,3 +102,5 @@ cmake_install.cmake
 install_manifest.txt
 
 main
+client
+server
