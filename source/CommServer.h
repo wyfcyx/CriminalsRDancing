@@ -35,7 +35,6 @@ private:
 	io_service service_;
 	ip::tcp::socket pipe_socket_;
 	UserInterface *user_;
-#define MAX_BUFFER 1024
 	char read_buffer_[MAX_BUFFER];
 	char write_buffer_[MAX_BUFFER];
 
