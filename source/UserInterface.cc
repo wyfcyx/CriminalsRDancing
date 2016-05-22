@@ -4,12 +4,12 @@
 #include <iostream>
 
 #include "defs.h"
-#include "Enterance.h"
+#include "UserInterface.h"
 #include "Game.h"
 
 #define VERSION "V0.01"
 
-void Enterance()
+void Entrance()
 {
 	puts("Welcome to CriminalsRDancing.");
 	puts("Commands:");

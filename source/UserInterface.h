@@ -1,4 +1,4 @@
 #include "defs.h"
 
-void Enterance();
+void Entrance();
 

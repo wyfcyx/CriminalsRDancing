@@ -1,1 +1,0 @@
-Store server source code.
