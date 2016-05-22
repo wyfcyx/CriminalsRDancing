@@ -20,7 +20,7 @@ UserInterface :: UserInterface()
 {
 	server_ip_ = "127.0.0.1";
 	port_ = DEFAULT_PORT;
-	pipe_ = boost::shared_ptr<CommServer>(new CommServer);
+	pipe_ = boost::shared_ptr<CommServer>(new CommServer(this));
 	username_ = "noname";
 }
 
@@ -39,7 +39,7 @@ void UserInterface :: FailedToConnect()
 void UserInterface :: SuccessToConnect()
 {
 	std::cout << "Succeeded to connect the server " << server_ip_ << ':' << port_ << std::endl;
-	SquareView();
+	SquareEntrance();
 }
 
 void UserInterface :: SquareEntrance()
@@ -55,8 +55,8 @@ void UserInterface :: SquareEntrance()
 		std::cout << "\'quit\', \'q\': Quit this server." << std::endl;
 		static std::string s;
 		std::cin >> s;
-		if (s == "quit" || s == 'q') {
-			pipe_->Disconnect(this);
+		if (s == "quit" || s == "q") {
+			pipe_->Disconnect();
 			return ;
 		}
 	}
@@ -105,7 +105,7 @@ void UserInterface :: Entrance()
 
 			// attempt to connect to server
 			ip::tcp::endpoint server(ip::address::from_string(server_ip_), port_);
-			pipe_->Connect(server, &UserInterface::FailedToConnect, this);
+			pipe_->Connect(server);
 		}
 		else {
 			printf("unknown command.\n");
