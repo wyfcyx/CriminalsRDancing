@@ -19,10 +19,13 @@ public:
 	CommServer();
 	boost::shared_ptr<CommServer> SmartNew();
 
-	void Connect(ip::tcp::endpoint server, void (UserInterface :: *FailedHandler)(), UserInterface *from);
+	void Connect(ip::tcp::endpoint server, UserInterface *from);
+	void Disconnect(UserInterface *from);
 private:
 	io_service service_;
 	ip::tcp::socket pipe_socket_;
+
+	void AfterConnect(const error_code &err, UserInterface *from);
 
 
 };

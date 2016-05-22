@@ -19,7 +19,23 @@ boost::shared_ptr<CommServer> CommServer :: SmartNew()
 	return re;
 }
 
-void CommServer :: Connect(ip::tcp::endpoint server, void (UserInterface :: *FailedHandler)(), UserInterface *from)
+void CommServer :: Connect(ip::tcp::endpoint server, UserInterface *from)
 {
-	(from->*FailedHandler)();
+	pipe_socket_.async_connect(server, MEM_FN1(AfterConnect, _1, from));
+}
+
+void CommServer :: AfterConnect(error_code &err, UserInterface *from)
+{
+	if (err)
+		from->FailedToConnect();
+	else
+		from->SuccessToConnect();
+}
+
+void CommServer :: Disconnect(UserInterface *from)
+{
+	if (!pipe_socket_.is_open())
+		return ;
+	pipe_socket_.close();
+	from->Entrance();
 }

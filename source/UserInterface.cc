@@ -18,8 +18,10 @@ using namespace boost::asio;
 
 UserInterface :: UserInterface()
 {
+	server_ip_ = "127.0.0.1";
 	port_ = DEFAULT_PORT;
 	pipe_ = boost::shared_ptr<CommServer>(new CommServer);
+	username_ = "noname";
 }
 
 void UserInterface :: Welcome()
@@ -34,13 +36,35 @@ void UserInterface :: FailedToConnect()
 	Entrance();
 }
 
-void UserInterface :: Entrance()
+void UserInterface :: SuccessToConnect()
+{
+	std::cout << "Succeeded to connect the server " << server_ip_ << ':' << port_ << std::endl;
+	SquareView();
+}
+
+void UserInterface :: SquareEntrance()
 {
 	while (true) {
-		puts("\n\n\nCurrent status:");
+		std::cout << "Now you are in the square." << std::endl;
+		std::cout << "Current status:" << std::endl;
 		std::cout << "Username: " << (username_.length() ? username_ : "(empty)") << std::endl;
 		std::cout << "Server IP: " << (server_ip_.length() ? server_ip_ : "(empty)") << std::endl;
 		std::cout << "Server port: " << port_ << std::endl;
+
+		std::cout << "Commands:" << std::endl;
+		std::cout << "\'quit\', \'q\': Quit this server." << std::endl;
+		static std::string s;
+		std::cin >> s;
+		if (s == "quit" || s == 'q') {
+			pipe_->Disconnect(this);
+			return ;
+		}
+	}
+}
+
+void UserInterface :: Entrance()
+{
+	while (true) {
 		puts("Commands:");
 		puts("\'version\', \'v\':\t\tView the current version of the game.");
 		puts("\'name\', \'n\':\t\tInput or change your name in the game. (Max 20 characters)");
