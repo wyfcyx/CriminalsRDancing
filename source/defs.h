@@ -1,6 +1,9 @@
 #ifndef _DEFS_H_
 #define _DEFS_H_
 
+#include <boost/shared_ptr.hpp>
+#include <boost/system/error_code.hpp>
+
 #define CRIMINAL       0 // cirminal
 #define DETECTIVE      1 // detective
 #define GOD_DOG        2 // god dog
@@ -58,5 +61,14 @@ const char DIG_TO_NAME_IN_CHINESE[11][100] = {
 	"不在场证明",
 	"谣言"
 };
+
+#define MEM_FN(x)			boost::bind(&self_type::x, shared_from_this())
+#define MEM_FN1(x, y)		boost::bind(&self_type::x, shared_from_this(), y)
+#define MEM_FN2(x, y, z)	boost::bind(&self_type::x, shared_from_this(), y, z)
+#define MEM_FN3(x, y, z, k)	boost::bind(&self_type::x, shared_from_this(), y, z, k)
+
+typedef boost::system::error_code error_code;
+
+#define DEFAULT_PORT 8235
 
 #endif // _DEFS_H_

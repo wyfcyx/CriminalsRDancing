@@ -111,7 +111,6 @@ int Player :: PopCard(int &extra_message)
 				extra_message = ReadAnotherPlayerFromTerminal(avaliable);
 				return card;
 			}
-			
 		}
 		if (card == GOD_DOG || card == WITNESS) {
 			DeleteCard(id - 1);

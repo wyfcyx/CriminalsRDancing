@@ -3,58 +3,95 @@
 #include <string>
 #include <iostream>
 
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
+#include <boost/shared_ptr.hpp>
+
 #include "defs.h"
 #include "UserInterface.h"
-#include "Game.h"
+#include "CommServer.h"
+#include "Player.h"
 
-#define VERSION "V0.01"
+using namespace boost::asio;
 
-void Entrance()
+#define VERSION "V0.02"
+
+UserInterface :: UserInterface()
 {
-	puts("Welcome to CriminalsRDancing.");
-	puts("Commands:");
-	puts("\'version\', \'v\': View the current version of the game.");
-	puts("\'start\', \'s\': Start a new game.");
-	puts("\'quit\', \'q\': Quit the game.");
+	port_ = DEFAULT_PORT;
+	pipe_ = boost::shared_ptr<CommServer>(new CommServer);
+}
 
-	std::string s;
+void UserInterface :: Welcome()
+{
+	std::cout << "Welcome to CriminalsRDancing " << VERSION << std::endl;
+	Entrance();
+}
+
+void UserInterface :: FailedToConnect()
+{
+	std::cout << "Failed to connect the server " << server_ip_ << ':' << port_ << std::endl;
+	Entrance();
+}
+
+void UserInterface :: Entrance()
+{
 	while (true) {
+		puts("\n\n\nCurrent status:");
+		std::cout << "Username: " << (username_.length() ? username_ : "(empty)") << std::endl;
+		std::cout << "Server IP: " << (server_ip_.length() ? server_ip_ : "(empty)") << std::endl;
+		std::cout << "Server port: " << port_ << std::endl;
+		puts("Commands:");
+		puts("\'version\', \'v\':\t\tView the current version of the game.");
+		puts("\'name\', \'n\':\t\tInput or change your name in the game. (Max 20 characters)");
+		puts("\'server\', \'s\':\t\tSet or change server ip.");
+		puts("\'port\', \'p\':\t\tSet or change server port. (Default 8346)");
+		puts("\'connect\', \'c\':\t\tConnect to the server.");
+		puts("\'quit\', \'q\':\t\tQuit the game.");
+
+		static std::string s;
 		std::cin >> s;
 		if (s == "version" || s == "v") {
-			printf("%s\n", VERSION);
-		}
-		else if (s == "start" || s == "s") {
-			break;
+			std::cout << VERSION << std::endl;
 		}
 		else if (s == "quit" || s == "q") {
 			return ;
+		}
+		else if (s == "name" || s == "n") {
+			std::cin >> username_;
+		}
+		else if (s == "server" || s == "s") {
+			std::cin >> server_ip_;
+		}
+		else if (s == "port" || s == "p") {
+			int _storage = port_;
+			std::cin >> port_;
+			if(port_ <= 1024 || port_ >= 65535)
+				port_ = _storage;
+		}
+		else if (s == "connect" || s == "c") {
+			if (!username_.length()) {
+				puts("No username. Please enter your username.");
+				continue;
+			}
+			if (!server_ip_.length()) {
+				puts("No server ip. Please enter the ip address of the server.");
+				continue;
+			}
+
+			// attempt to connect to server
+			ip::tcp::endpoint server(ip::address::from_string(server_ip_), port_);
+			pipe_->Connect(server, &UserInterface::FailedToConnect, this);
 		}
 		else {
 			printf("unknown command.\n");
 		}
 	}
 
-	int num = 0;
-	puts("Enter the number of players: ");
-	while (true) {
-		scanf("%d", &num);
-		if(num <= MAX_PLAYER && num >= MIN_PLAYER)
-			break;
-		puts("This number is invalid.\nPlease re-enter a valid number.");
-	}
-	int players = num;
 
-	printf("Enter the minimum score to win: ");
-	while (true) {
-		scanf("%d", &num);
-		if(num > 0)
-			break;
-		printf("You must input a positive number!\nPlease input the minimum score to win: ");
-	}
-	int min_score = num;
 
-	Game *current_game = new Game(players, min_score);
-	current_game->Start();
+	// TODO: get player data from server
+	// TODO: create a player using the data from server
 
 	return ;
 }

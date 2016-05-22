@@ -17,7 +17,7 @@ public:
 	Player(char *_name, Game *_game, int _pos);
 
 	void BeforeTheSubGame();
-	
+
 	void GetScore(int add);
 
 	void CardList();
@@ -41,7 +41,7 @@ public:
 	bool ShowAbsent();
 	bool IsCriminal();
 	void BeWatchedPlayer(Player player);
-	
+
 	void ReceiveNotice(char *notice);
 private:
 	int cards[MAX_CARD], num_cards, pos;
