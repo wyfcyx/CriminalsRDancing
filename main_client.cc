@@ -6,7 +6,9 @@
 
 int main()
 {
-	Entrance();
+	UserInterface *view_controller = new UserInterface();
+
+	view_controller->Welcome();
 
 	return EXIT_SUCCESS;
 }
