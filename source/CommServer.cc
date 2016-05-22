@@ -31,8 +31,10 @@ void CommServer :: AfterConnect(const error_code &err)
 {
 	if (err)
 		user_->FailedToConnect();
-	else
+	else {
 		user_->SuccessToConnect();
+		AsyncRead();
+	}
 }
 
 void CommServer :: Disconnect()
@@ -61,7 +63,7 @@ void CommServer :: AfterRead(const error_code &err, size_t bytes)
 {
 	if (err)	return ;
 	std::string message(read_buffer_, bytes);
-	user_->Receive(message);
+	//user_->Receive(message);
 }
 
 void CommServer :: AsyncWrite(const std::string &message)

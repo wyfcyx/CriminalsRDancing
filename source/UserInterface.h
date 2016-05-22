@@ -21,7 +21,7 @@ private:
 	boost::asio::io_service main_service_;
 	boost::shared_ptr<CommServer> pipe_;
 
-	void SuqareEntrance();
+	void SquareEntrance();
 };
 
 #endif // _USER_INTERFACE_H_
