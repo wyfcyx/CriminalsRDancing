@@ -70,5 +70,6 @@ const char DIG_TO_NAME_IN_CHINESE[11][100] = {
 typedef boost::system::error_code error_code;
 
 #define DEFAULT_PORT 8235
+#define MAX_BUFFER 1024
 
 #endif // _DEFS_H_

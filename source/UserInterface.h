@@ -18,7 +18,6 @@ public:
 private:
 	std::string username_, server_ip_;
 	int port_;
-	boost::asio::io_service main_service_;
 	boost::shared_ptr<CommServer> pipe_;
 
 	void SquareEntrance();

@@ -25,6 +25,7 @@ boost::shared_ptr<CommServer> CommServer :: SmartNew(UserInterface *user)
 void CommServer :: Connect(ip::tcp::endpoint server)
 {
 	pipe_socket_.async_connect(server, MEM_FN1(AfterConnect, _1));
+	service_.run();
 }
 
 void CommServer :: AfterConnect(const error_code &err)
