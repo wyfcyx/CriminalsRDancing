@@ -11,13 +11,13 @@
 
 using namespace boost::asio;
 
-CommClient :: CommClient(): pipe_socket_(service)
+CommClient :: CommClient(io_service &service): pipe_socket_(service)
 {
 }
 
-boost::shared_ptr<CommClient> CommClient :: SmartNew()
+boost::shared_ptr<CommClient> CommClient :: SmartNew(io_service &service)
 {
-	boost::shared_ptr<CommClient> re(new CommClient());
+	boost::shared_ptr<CommClient> re(new CommClient(service));
 	return re;
 }
 
