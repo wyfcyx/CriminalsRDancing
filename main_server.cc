@@ -23,7 +23,7 @@ void NextAccept(boost::shared_ptr<CommClient> client, const error_code &err, ip:
 
 int main()
 {
-	ip::tcp::acceptor acceptor(service, ip::tcp::v4(), DEFAULT_PORT);
+	ip::tcp::acceptor acceptor(service, ip::tcp::endpoint(ip::tcp::v4(), DEFAULT_PORT));
 
 	boost::shared_ptr<CommClient> client = CommClient::SmartNew(service);
 	acceptor.async_accept(client->pipe_socket_, boost::bind(NextAccept, client, _1, &acceptor));

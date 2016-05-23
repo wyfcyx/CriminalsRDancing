@@ -23,14 +23,13 @@ boost::shared_ptr<CommClient> CommClient :: SmartNew(io_service &service)
 
 void CommClient :: AfterConnect()
 {
+	std::cout << "successfully connected a client." << std::endl;
 	AsyncRead();
 }
 
 void CommClient :: AsyncRead()
 {
-	async_read(pipe_socket_, buffer(read_buffer_), boost::bind(&CommClient::IsComplete, shared_from_this(), _1, _2),
-			boost::bind(&CommClient::AfterRead, shared_from_this(), _1, _2));
-			//MEM_FN2(IsComplete, _1, _2), MEM_FN2(AfterRead, _1, _2));
+	async_read(pipe_socket_, buffer(read_buffer_), MEM_FN2(IsComplete, _1, _2), MEM_FN2(AfterRead, _1, _2));
 }
 
 void CommClient :: AfterRead(const error_code &err, size_t bytes)
