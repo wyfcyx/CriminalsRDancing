@@ -11,12 +11,12 @@
 
 using namespace boost::asio;
 
-void NextAccept(shared_ptr<CommClient> client, error_code &err, ip::tcp::acceptor *acceptor)
+void NextAccept(boost::shared_ptr<CommClient> client, const error_code &err, ip::tcp::acceptor *acceptor)
 {
 	client->AfterConnect();
 
-	shared_ptr<CommClient> next_client = CommClient::SmartNew();
-	acceptor.async_accept(next_client->pipe_socket_, boost::bind(NextAccept, next_client, _1, acceptor));
+	boost::shared_ptr<CommClient> next_client = CommClient::SmartNew();
+	acceptor->async_accept(next_client->pipe_socket_, boost::bind(NextAccept, next_client, _1, acceptor));
 }
 
 int main()
@@ -24,9 +24,11 @@ int main()
 	io_service service;
 	ip::tcp::acceptor acceptor(service, ip::tcp::v4(), DEFAULT_PORT);
 
-	shared_ptr<CommClient> client = CommClient::SmartNew();
+	boost::shared_ptr<CommClient> client = CommClient::SmartNew();
 	acceptor.async_accept(client->pipe_socket_, boost::bind(NextAccept, client, _1, &acceptor));
 
 	service.run();
+
 	return EXIT_SUCCESS;
 }
+

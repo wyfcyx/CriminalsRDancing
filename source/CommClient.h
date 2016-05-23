@@ -12,20 +12,35 @@
 
 using namespace boost::asio;
 
+class CommClient;
+
 typedef boost::shared_ptr<CommClient> ClientPtr;
 
 class CommClient: public boost::enable_shared_from_this<CommClient>, boost::noncopyable {
 public:
-	CommClient(): service_(), pipe_socket_(service_);
-	shared_ptr<CommClient> SmartNew();
+	typedef CommClient self_type;
+	CommClient();
+	static boost::shared_ptr<CommClient> SmartNew();
+
+	io_service service_;
+	ip::tcp::socket pipe_socket_;
+
+	void AfterConnect();
+
+	void AsyncRead();
+	void AfterRead(const error_code &err, size_t bytes);
+
+	void AsyncWrite(const std::string &message);
+	void AfterWrite(const error_code &err, size_t bytes);
+
+	size_t IsComplete(const error_code &err, size_t bytes);
 
 private:
-	ip::tcp::pipe_socket_;
-	io_service service_;
 	char read_buffer_[MAX_BUFFER];
 	char write_buffer_[MAX_BUFFER];
 
-	static std::vector<CommClient> client_list;
-}
+	static std::vector<ClientPtr> client_list;
+};
 
 #endif // _COMM_CLIENT_H_
+
