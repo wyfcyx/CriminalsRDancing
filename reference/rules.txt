@@ -22,8 +22,12 @@ Details:
 	"RECEIVEMESSAGE$MESSAGE$TYPE"，表示接受系统传来的信息以及你的回应。
 		TYPE=1，你调用POPCARD进行一次出牌。
 		TYPE=2，你调用FOLDCARD进行一次弃牌。
-		TYPE=3，如你有不在场证明且别人对你使用侦探牌，你选择是否出示不在场证明进行回应。
+		TYPE=3，表示你有不在场证明且别人对你使用侦探牌，你选择是否出示不在场证明进行回应。
 		TYPE=4，你只接受信息，但什么也不需要做。
-		
+	"NEWGAMESTART"，表示新的一局游戏开始。
+	"NEWSUBGAMESTART$POS"，表示新的一局子游戏开始，通知你在这一局中的位置。
+	"YOURCARD$NUM_CARD$CARD1$CARD2$CARD3$CARD4"，（如果这个CARD为空则为-1）表示系统需要你进行操作，通知你现在的手牌。
+	"YOURTURN"，通知你进行打牌。
+	""
 
 
