@@ -34,6 +34,8 @@ public:
 
 	size_t IsComplete(const error_code &err, size_t bytes);
 
+	void Disconnect();
+
 private:
 	char read_buffer_[MAX_BUFFER];
 	char write_buffer_[MAX_BUFFER];

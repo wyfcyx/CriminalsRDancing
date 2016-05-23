@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <iostream>
+#include <algorithm>
 
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
@@ -10,6 +11,8 @@
 #include "CommClient.h"
 
 using namespace boost::asio;
+
+std::vector<ClientPtr> CommClient::client_list;
 
 CommClient :: CommClient(io_service &service): pipe_socket_(service)
 {
@@ -24,6 +27,8 @@ boost::shared_ptr<CommClient> CommClient :: SmartNew(io_service &service)
 void CommClient :: AfterConnect()
 {
 	std::cout << "successfully connected a client." << std::endl;
+	client_list.push_back(this->shared_from_this());
+	std::cout << "Now server has " << client_list.size() << " online." << std::endl;
 	AsyncRead();
 }
 
@@ -58,5 +63,11 @@ size_t CommClient :: IsComplete(const error_code &err, size_t bytes)
 
 	bool found = std::find(read_buffer_, read_buffer_ + bytes, '\n') < read_buffer_ + bytes;
 	return found ? 0 : 1;
+}
+
+void CommClient :: Disconnect()
+{
+	std::vector<ClientPtr>::iterator this_pos = find(client_list.begin(), client_list.end(), this->shared_from_this());
+	client_list.erase(this_pos);
 }
 
