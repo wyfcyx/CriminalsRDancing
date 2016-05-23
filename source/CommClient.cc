@@ -11,7 +11,7 @@
 
 using namespace boost::asio;
 
-CommClient :: CommClient(): service_(), pipe_socket_(service_)
+CommClient :: CommClient(): pipe_socket_(service)
 {
 }
 

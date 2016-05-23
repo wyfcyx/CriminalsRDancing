@@ -21,7 +21,6 @@ void NextAccept(boost::shared_ptr<CommClient> client, const error_code &err, ip:
 
 int main()
 {
-	io_service service;
 	ip::tcp::acceptor acceptor(service, ip::tcp::v4(), DEFAULT_PORT);
 
 	boost::shared_ptr<CommClient> client = CommClient::SmartNew();

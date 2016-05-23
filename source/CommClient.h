@@ -16,13 +16,14 @@ class CommClient;
 
 typedef boost::shared_ptr<CommClient> ClientPtr;
 
+io_service service;
+
 class CommClient: public boost::enable_shared_from_this<CommClient>, boost::noncopyable {
 public:
 	typedef CommClient self_type;
 	CommClient();
 	static boost::shared_ptr<CommClient> SmartNew();
 
-	io_service service_;
 	ip::tcp::socket pipe_socket_;
 
 	void AfterConnect();
