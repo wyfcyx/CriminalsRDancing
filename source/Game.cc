@@ -10,41 +10,20 @@
 
 Game :: Game(int _, int __)
 {
-	num_players = _;
-	win_score = __;
-	manager = new CardManager(num_players);
+	num_players_ = _;
+	win_score_ = __;
+	manager_ = new CardManager(num_players_);
 
-	for (int i = 0; i < num_players; ++i)
+	for (int i = 0; i < num_players_; ++i)
 		rank[i] = 1;
 }
 
-bool Game :: MaintainRanking()
+void Game :: GameStart()
 {
-	static std::map<int, int> score;
-	score.clear();
-	for (int i = 0; i < num_players; ++i)
-		score.insert(std::make_pair(players[i].score, i));
+	manager_->GenerateCardsSequence();
 
-	int current_rank = 0, last_rank = 0, last_score = 0;
-	for (std::map<int, int>::reverse_iterator i = score.rbegin(); i != score.rend(); ++i, ++current_rank) {
-
-		if (i == score.rbegin() || last_score != i->first)
-			rank[i->second] = current_rank;
-		else
-			rank[i->second] = last_rank;
-
-		last_score = i->first;
-		last_rank = rank[i->second];
-	}
-
-	return score.rbegin()->first >= win_score;
-}
-
-void Game :: SubGameStart()
-{
-	manager->GenerateCardsSequence();
-
-	for (int i = 0; i < num_players; ++i)
+	/*
+	for (int i = 0; i < num_players_; ++i)
 		players[i].BeforeTheSubGame();
 
 	int p_card = 0;
@@ -210,71 +189,21 @@ void Game :: SubGameStart()
 		read = getchar();
 		read = getchar();
 	}
+*/
 }
 
 void Game :: GoRound(bool is_rumor, Node *now)
 {
 	Node *p = now;
-	int temp[MAX_PLAYER], tot = 0;
+	static int temp[MAX_PLAYER];
+	int tot = 0;
 	memset(temp, 0, sizeof(temp));
-	do {
-		if(!is_rumor) {
-			printf("System Message : %s needs to select a card and give it to next player.\n", players[p->pos].name);
-			temp[tot++] = players[p->pos].Fold();
-		}
-		else {
-			printf("System Message : %s has select a card and give it to next player randomly.\n", players[p->pos].name);
-			temp[tot++] = players[p->pos].RandomFold();
-		}
-		p = p->_next;
-	}while (p != now);
 
-	p = now;
-	for (int i = 0; i < tot; ++i) {
-		players[p->_next->pos].GetCard(temp[i]);
-		p = p->_next;
-	}
-}
+	// is_rumor = true -> random
+	// is_rumor = false -> certain
 
-void Game :: Start()
-{
-	char temp_name[10];
-	for (int i = 0; i < num_players; ++i) {
-		sprintf(temp_name, "Player %d", i + 1);
-		players[i] = Player(temp_name, this, i);
-	}
 
-	int _round = 0;
-	while (true) {
-		printf("Game Round %d Start!\n", ++_round);
-
-		SubGameStart();
-
-		printf("Game Round %d Ended!\n", _round);
-
-		if (MaintainRanking())
-			break;
-
-		PrintRanking();
-	}
-	puts("Game over!");
-	static bool is_winner[MAX_PLAYER];
-	memset(is_winner, 0, sizeof(is_winner));
-	int winners = 0;
-	char *name = NULL;
-	for (int i = 0; i < num_players; ++i)
-		if (players[i].score >= win_score)
-			is_winner[i] = true, ++winners, name = players[i].name;
-
-	if (winners == 1)
-		printf("Winner is %s.\n", name);
-	else {
-		printf("Winners are:");
-		for (int i = 0; i < num_players; ++i)
-			if (is_winner[i])
-				printf(" %s,", players[i].name);
-		puts(".");
-	}
+	// TODO
 }
 
 void Game :: PlayerIsEmpty(int pos)
@@ -287,28 +216,16 @@ void Game :: PlayerIsEmpty(int pos)
 		}
 }
 
-void Game :: PrintRanking()
+
+std::string Game :: GetMessage(const std::string &message)
 {
-	puts("Now Ranking:");
-	for (int i = 1; i <= num_players; ++i)
-		for (int j = 0; i < num_players; ++j) {
-			if(rank[j] == i) {
-				printf("Rank %d: %s", i, players[j].name);
-				if(i == 1)
-					printf("\t\tbeast player!");
-				puts("");
-			}
-		}
+	return message;
 }
 
-Node :: Node(Node *_, Node *__, int ___)
+Node :: Node(Node *_, Node *__, boost::shared_ptr<CommClient> ___)
 {
 	_next = _;
 	back = __;
-	pos = ___;
+	player = ___;
 }
 
-Node :: Node()
-{
-
-}

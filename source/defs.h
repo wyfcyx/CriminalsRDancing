@@ -72,4 +72,8 @@ typedef boost::system::error_code error_code;
 #define DEFAULT_PORT 8235
 #define MAX_BUFFER 1024
 
+#define DEFAULT_SCORE_TO_WIN 10
+#define MAX_ROOM 100
+
 #endif // _DEFS_H_
+

@@ -9,6 +9,7 @@
 #include <boost/enable_shared_from_this.hpp>
 
 #include "defs.h"
+#include "Game.h"
 
 using namespace boost::asio;
 
@@ -34,13 +35,14 @@ public:
 
 	size_t IsComplete(const error_code &err, size_t bytes);
 
-	void Disconnect();
-
 private:
 	char read_buffer_[MAX_BUFFER];
 	char write_buffer_[MAX_BUFFER];
 
-	static std::vector<ClientPtr> client_list;
+	int id_;
+	std::string name_;
+	int status_, pos_;
+	bool is_creater_;
 };
 
 #endif // _COMM_CLIENT_H_

@@ -1,38 +1,45 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
+#include <string>
+
+#include <boost/shared_ptr.hpp>
+
+#include "defs.h"
 #include "Player.h"
 #include "CardManager.h"
-#include "defs.h"
+
+#include "CommClient.h"
 
 struct Node {
 	Node *_next;
 	Node *back;
-	int pos;
+	boost::shared_ptr<CommClient> player;
 
 	Node();
-	Node(Node* _, Node* __, int ___);
+	Node(Node* _, Node* __, boost::shared_ptr<CommClient>  ___);
 };
 
 class Game {
 public:
-	int rank[MAX_PLAYER];
-	Node list[MAX_PLAYER];
-	Player players[MAX_PLAYER];
-
 	Game(int _, int __);
-	bool MaintainRanking();
-	void Start();
-	void SubGameStart();
-	void PrintRanking();
+
+	void GameStart();
 	void PlayerIsEmpty(int pos);
+	std::string GetMessage(const std::string &message);
 
 private:
-	int num_players, win_score;
+	int num_players_, win_score_;
+	int rank_[MAX_PLAYER];
+	Node list_[MAX_PLAYER];
 
-	CardManager *manager;
+	CardManager *manager_;
 
 	void GoRound(bool is_rumor, Node *now);
+
+	void SendMessage(ClientPtr the_one, const std::string &message);
+	void SendMessage(const std::string &message); // send to all players.
 };
 
 #endif // _GAME_H_
+
