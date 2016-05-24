@@ -1,0 +1,34 @@
+Details:
+	通信长度不超过1024。
+	目前保证不会出现相同的用户名。
+	保证用户名中不会出现'$'。
+客户端向服务端传递信息：
+	"REGISTER$USERNAME"，表示注册。
+	"LOGIN$USERNAME"，表示登录。
+	"LOGOUT"，表示登出。
+	"INTOROOM$ROOMID"，表示加入房间。
+	"LEAVEROOM"，表示离开房间。
+	"READY"，表示在房间中准备。
+	"CANCELREADY"，表示在房间中取消准备。
+	"START"，表示作为一个房间中的房主请求开始一局游戏。
+	"SPEAKINSQUARE$MESSAGE"，表示在大厅中说话。
+	"SPEAKINROOM$MESSAGE"，表示在房间中说话。
+	"SPEAKINGAME$MESSAGE"，表示在游戏中说话。
+	"POPCARD$CARD$EXTRA_MESSAGE"，表示打出一张牌，后面为附加信息。
+		根据Player.cc中的Popcard()实现即可。
+	"FOLD$CARD"，表示弃一张牌。
+	"ABSENT"，表示使用不在场证明进行回应。
+	"NOTABSENT"，表示不使用不在场证明进行回应。
+服务端向客户端传递信息：
+	"NEWGAMESTART"，表示新的一局游戏开始。
+	"NEWSUBGAMESTART$POS"，表示新的一局子游戏开始，通知你在这一局中的位置。
+	"YOURCARD$NUM_CARD$CARD1$CARD2$CARD3$CARD4"，（如果这个CARD为空则为-1）表示系统需要你进行操作，通知你现在的手牌。
+	"RECEIVEMESSAGE$MESSAGE$TYPE"，表示接受系统传来的信息以及你的回应。
+		TYPE=1，你调用POPCARD进行一次出牌。
+		TYPE=2，你调用FOLDCARD进行一次弃牌。
+		TYPE=3，表示你有不在场证明且别人对你使用侦探牌，你选择是否出示不在场证明进行回应。
+		TYPE=4，你只接受信息，但什么也不需要做。
+	
+
+框架结构：
+	UserInterface存储当前登录的账号，以及在哪个房间中，是否在进行游戏，是否在准备状态。
