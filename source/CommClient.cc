@@ -22,11 +22,11 @@ boost::shared_ptr<CommClient> CommClient :: SmartNew(io_service &service)
 	return re;
 }
 
-void CommClient :: AfterConnect()
+void CommClient :: AfterConnect(std::vector<ClientPtr> *client_list)
 {
 	std::cout << "successfully connected a client." << std::endl;
-	client_list.push_back(this->shared_from_this());
-	std::cout << "Now server has " << client_list.size() << " online." << std::endl;
+	client_list->push_back(this->shared_from_this());
+	std::cout << "Now server has " << client_list->size() << " online." << std::endl;
 	AsyncRead();
 }
 

@@ -9,11 +9,11 @@
 #include <boost/enable_shared_from_this.hpp>
 
 #include "defs.h"
-#include "Game.h"
 
 using namespace boost::asio;
 
 class CommClient;
+class Game;
 
 typedef boost::shared_ptr<CommClient> ClientPtr;
 
@@ -25,7 +25,7 @@ public:
 
 	ip::tcp::socket pipe_socket_;
 
-	void AfterConnect();
+	void AfterConnect(std::vector<ClientPtr> *client_list);
 
 	void AsyncRead();
 	void AfterRead(const error_code &err, size_t bytes);

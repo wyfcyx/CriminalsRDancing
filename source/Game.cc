@@ -15,7 +15,7 @@ Game :: Game(int _, int __)
 	manager_ = new CardManager(num_players_);
 
 	for (int i = 0; i < num_players_; ++i)
-		rank[i] = 1;
+		rank_[i] = 1;
 }
 
 void Game :: GameStart()
@@ -206,12 +206,12 @@ void Game :: GoRound(bool is_rumor, Node *now)
 	// TODO
 }
 
-void Game :: PlayerIsEmpty(int pos)
+void Game :: PlayerIsEmpty(ClientPtr player)
 {
-	for (int i = 0; i < num_players; ++i)
-		if(list[i].pos == pos) {
-			list[i].back->_next = list[i]._next;
-			list[i]._next->back = list[i].back;
+	for (int i = 0; i < num_players_; ++i)
+		if(player == list_[i].player) {
+			list_[i].back->_next = list_[i]._next;
+			list_[i]._next->back = list_[i].back;
 			break;
 		}
 }

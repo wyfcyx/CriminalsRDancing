@@ -14,10 +14,10 @@
 struct Node {
 	Node *_next;
 	Node *back;
-	boost::shared_ptr<CommClient> player;
+	ClientPtr player;
 
 	Node();
-	Node(Node* _, Node* __, boost::shared_ptr<CommClient>  ___);
+	Node(Node* _, Node* __, ClientPtr  ___);
 };
 
 class Game {
@@ -25,7 +25,7 @@ public:
 	Game(int _, int __);
 
 	void GameStart();
-	void PlayerIsEmpty(int pos);
+	void PlayerIsEmpty(ClientPtr player);
 	std::string GetMessage(const std::string &message);
 
 private:

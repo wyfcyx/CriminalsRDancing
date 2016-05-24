@@ -47,9 +47,7 @@ void Shuffle(int array[], int elements)
 	unsigned int seed = (unsigned int)rand();
 
 	shuffle(array, array + elements, std::default_random_engine(seed));
-	/*for (int i = 0; i < elements; ++i)
-		printf("%d ", array[i]);
-	*/
+
 	return ;
 }
 
