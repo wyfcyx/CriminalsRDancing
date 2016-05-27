@@ -3,22 +3,36 @@
 #include <cstring>
 #include <iostream>
 
-#include <boost/shared_ptr.hpp>
-
-#include "defs.h"
 #include "RoomController.h"
-#include "CommClient.h"
 
-RoomController :: RoomController(const std::vector<ClientPtr> *client_list, const int room)
+RoomController :: RoomController()
 {
-	std::vector<ClientPtr>::iterator iter;
-	int count = 0;
-	for (iter = client_list.begin(); iter != client_list.end(); ++iter)
-		if (*iter->status_ == room)
-			++count;
-
-	Game *current_game = Game(count, DEFAULT_SCORE_TO_WIN);
-	for (iter = client_list.begin(); iter != client_list.end(); ++iter)
-		if (*iter->status_ == room)
-			current_game->list[*iter->pos_] = *iter;
+	is_playing_ = false;
+	min_score = DEFAULT_SCORE_TO_WIN;
 }
+
+void GotMessage(const std::string &message)
+{
+
+}
+
+void MaintainRanking()
+{
+}
+
+void NewPlayer(ClientPtr client)
+{
+	player_list_.push_back(client);
+}
+
+void GameStart()
+{
+	int total_player = player_list_.size();
+	current_game_ = new Game(total_player , min_score_);
+}
+
+void ChangeMinScore(int new_score)
+{
+	min_score_ = new_score;
+}
+

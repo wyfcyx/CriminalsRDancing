@@ -8,20 +8,22 @@
 #include "defs.h"
 #include "CardManager.h"
 
-Game :: Game(int _, int __)
+Game :: Game(int _, int __, RoomController *creator)
 {
 	num_players_ = _;
 	win_score_ = __;
 	manager_ = new CardManager(num_players_);
-
-	for (int i = 0; i < num_players_; ++i)
-		rank_[i] = 1;
+	current_room_ = creator;
 }
 
 void Game :: GameStart()
 {
 	manager_->GenerateCardsSequence();
 
+	int p_card = 0;
+	for (int i = 0; i < num_players_; ++i)
+		for (int j = 0; j < 4; ++j)
+			list_[i].:
 	/*
 	for (int i = 0; i < num_players_; ++i)
 		players[i].BeforeTheSubGame();

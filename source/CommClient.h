@@ -39,10 +39,7 @@ private:
 	char read_buffer_[MAX_BUFFER];
 	char write_buffer_[MAX_BUFFER];
 
-	int id_;
-	std::string name_;
-	int status_, pos_;
-	bool is_creater_;
+	int player_id_;
 };
 
 #endif // _COMM_CLIENT_H_

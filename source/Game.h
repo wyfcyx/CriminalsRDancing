@@ -11,6 +11,8 @@
 
 #include "CommClient.h"
 
+class RoomController;
+
 struct Node {
 	Node *_next;
 	Node *back;
@@ -22,7 +24,7 @@ struct Node {
 
 class Game {
 public:
-	Game(int _, int __);
+	Game(int _, int __, RoomController *creator);
 
 	void GameStart();
 	void PlayerIsEmpty(ClientPtr player);
@@ -32,6 +34,7 @@ private:
 	int num_players_, win_score_;
 	int rank_[MAX_PLAYER];
 	Node list_[MAX_PLAYER];
+	RoomController *current_room_;
 
 	CardManager *manager_;
 

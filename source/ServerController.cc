@@ -36,12 +36,13 @@ void DisconnectServer(ClientPtr client)
 
 void GetInRoom(ClientPtr client, int room)
 {
-	client->status_ = room;
+	client_status_[client] = room;
 	++room_count_[room];
+	room_[room].NewPlayer(client);
 }
 
 void GetOutRoom(ClientPtr client)
 {
-	--room_count[client->status_];
-	client->status_ = 0;
+	--room_count[client_status_[client]];
+	client_status_[client] = 0;
 }
