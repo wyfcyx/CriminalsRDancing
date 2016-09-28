@@ -11,16 +11,15 @@ def main():
 
     while True:
         user_input = input("Please input a server address to connect... ")
-        try:
-            try:
-                pos = user_input.index(':')
-            except ValueError:
-                port = DEFAULT_PORT
-            else:
-                port = int(user_input[pos + 1:])
-                user_input = user_input[:pos]
 
-            s.connect((user_input, port))
+        content = user_input.split(':')
+        if len(content) == 1:
+            port = DEFAULT_PORT
+        else:
+            port = content[1]
+
+        try:
+            s.connect((content[0], port))
         except KeyboardInterrupt:
             print("User stop connecting.")
         except BaseException:
